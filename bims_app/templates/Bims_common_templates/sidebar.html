@@ -1,0 +1,42 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'dashboard' %}">
+                    <span><i class="fa fa-dashboard"></i></span>
+                    Dashboard <span>(current)</span>
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'client' %}">
+                    <span></span>
+                    client
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'business' %}">
+                    <span></span>
+                    Business
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'loans' %}">
+                    <span></span>
+                   Loans
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'group' %}">
+                    <span></span>
+                   Groups
+                </a>
+            </li>
+            <div class="dropdown-divider"></div>
+        </ul>
+
+    </div>
+</nav>

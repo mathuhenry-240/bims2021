@@ -1,0 +1,39 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Griffines,Brian,Henry Bank Management System">
+    <title>{% block title%}dashboard{% endblock%}</title>
+<!--    bootstrap core css-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<!--    custom dashboard css-->
+    <link rel="stylesheet" href="{% static 'css/custom-style.css' %}">
+<!--    font awesome css-->
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}">
+</head>
+<body>
+<!--topnavbar-->
+{% include 'Bims_common_templates/navbar.html' %}
+<div class="container-fluid">
+    <div class="row">
+        <!--sidebar-->
+        {% include 'Bims_common_templates/sidebar.html' %}
+
+        {% block content%}
+
+
+        {% endblock content%}
+
+    </div>
+</div>
+<!--javascript-->
+<script src="{%static 'js/jquery-3.4.1.slim.min.js' %}"></script>
+<script src="{%static 'js/popper.min.js' %}"></script>
+<script src="{%static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>
