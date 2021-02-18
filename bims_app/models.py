@@ -32,20 +32,19 @@ class Group(models.Model):
     YOE = models.DateField(auto_now_add=True)
 
 
-# clients business registration model
-class Business(models.Model):
-    Business_No = models.CharField(max_length=20)
-    NameOfBusiness = models.CharField(max_length=50,)
-    Client = models.ForeignKey(Client,on_delete=models.CASCADE)
-    Email = models.EmailField()
-    phone_number_validator = RegexValidator(regex=r'^(0|\+)\d{8,15}$')
-    Contact = models.CharField(validators=[phone_number_validator],max_length=17,unique=True)
-
-
-# loans model
+#loans creation model
 class Loans(models.Model):
-    LoanBorrowed = models.IntegerField()
+    Loan_Name = models.CharField(max_length=99)
+    Loan_Duration = models.DecimalField(max_digits=7,decimal_places=2)
+    Amount = models.IntegerField()
+    CratedOn = models.DateField(auto_now=True)
+    isActive = models.BooleanField(default=True)
+
+
+# loans application model
+class Application(models.Model):
     ClientName = models.ForeignKey(Client,on_delete=models.CASCADE)
+    Loan = models.ForeignKey(Loans,on_delete=models.CASCADE)
     IsActive = models.BooleanField(default=True)
     AppliedOn = models.DateField(auto_now_add=True)
     TimeDue = models.DateField(auto_now_add=True)

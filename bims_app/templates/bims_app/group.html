@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% block tittle%}
+Groups
+{% endblock%}
+
+{% block content%}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Group</h1>
+    </div>
+
+
+    <div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#groupModal">
+            Add Group
+        </button>
+        {% include 'Bims_common_templates/messages.html' %}
+
+        <!-- create group Modal -->
+        <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="groupModalLabel">Add Group Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'add-group' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="NameOfTheGroup">NameOfGroup:</label>
+                                <input type="text" class="form-control" id="NameOfTheGroup" name="NameOfTheGroup">
+                            </div>
+                            <div class="form-group">
+                                <label for="ChairOfGroup">ChairOfGroup:</label>
+                                <input type="text" class="form-control" id="ChairOfGroup"
+                                       name="ChairOfGroup">
+                            </div>
+                            <div class="form-group">
+                                <label for="Treasurer">Treasurer:</label>
+                                <input type="text" class="form-control" id="Treasurer" name="Treasurer">
+                            </div>
+                            <div class="form-group">
+                                <label for="TPNumber">Phone_Number:</label>
+                                <input type="tel" pattern="^(0|\+)\d{8,15}$" class="form-control" id="TPNumber"
+                                       name="TPNumber" placeholder="07xxxxxxxx">
+                            </div>
+                            <div class="form-group">
+                                <label for="YOE">YearOfEstablishnment:</label>
+                                <input type="date" class="form-control" id="YOE" name="YOE">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">NameOfGroup</th>
+                <th scope="col">ChairOfGroup</th>
+                <th scope="col">Treasurer</th>
+                <th scope="col">phone</th>
+                <th scope="col">year</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groups %}
+            <tr>
+                <th scope="row">{{ group.id }}</th>
+                <td>{{ group.NameOfTheGroup }}</td>
+                <td>{{ group.ChairOfGroup }}</td>
+                <td>{{ group.Treasurer }}</td>
+                <td>{{ group.TPNumber }}</td>
+                <td>{{ group.YOE }}</td>
+                <td>
+                    <button data-toggle="modal" data-target="#update{{ group.id }}"
+                            class="btn btn-sm btn-info">Update
+                    </button>
+                    <button data-toggle="modal" data-target="#delete{{ group.id }}"
+                            class="btn btn-sm btn-warning">Delete
+                    </button>
+                </td>
+            </tr>
+            <!-- update client Modal -->
+            <div class="modal fade" id="update{{ group.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="updateModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateModal">Update Group Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'update-group' group.id%}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="NameOfTheGroup">NameOfGroup:</label>
+                                    <input type="text" class="form-control" id="NameOfTheGroup" name="NameOfTheGroup"
+                                           value="{{ group.NameOfTheGroup }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChairOfGroup">ChairOfGroup:</label>
+                                    <input type="text" class="form-control" id="ChairOfGroup"
+                                           name="ChairOfGroup" value="{{ group.ChairOfGroup }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Treasurer">Treasurer:</label>
+                                    <input type="text" class="form-control" id="Treasurer" name="Treasurer"
+                                           value="{{ group.Treasurer }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="TPNumber">Phone_Number:</label>
+                                    <input type="tel" pattern="^(0|\+)\d{8,15}$" class="form-control" id="TPNumber"
+                                           name="TPNumber" placeholder="07xxxxxxxx" value="{{ group.TPNumber }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="YOE">YearOfEstablishnment:</label>
+                                    <input type="date" class="form-control" id="YOE" name="YOE" value="{{ group.YOE }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- delete group Modal -->
+            <div class="modal fade" id="delete{{ group.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="deleteModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModal">Confirm Delete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'delete-group' group.id %}" method="post">
+                                {% csrf_token %}
+                                <p>Are you sure you want to delete "{{ group.NameOfTheGroup }}"?</p>
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock%}

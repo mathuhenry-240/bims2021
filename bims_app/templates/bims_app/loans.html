@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% block tittle %}
+Loans
+{% endblock %}
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Loans</h1>
+    </div>
+
+
+    <div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loanModal">
+            create Loan
+        </button>
+        {% include 'Bims_common_templates/messages.html' %}
+
+        <!-- create loan Modal -->
+        <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loanModalLabel">create loan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'create-loan' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="Loan_Name">Loan_Name:</label>
+                                <input type="text" class="form-control" id="Loan_Name" name="Loan_Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Loan_Duration">Loan_Duration:</label>
+                                <input type="text" class="form-control" id="Loan_Duration"
+                                       name="Loan_Duration">
+                            </div>
+                            <div class="form-group">
+                                <label for="Amount">Amount:</label>
+                                <input type="number" class="form-control" id="Amount" name="Amount">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">create</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Loan Name</th>
+                <th scope="col">Loan Duration</th>
+                <th scope="col">Amount</th>
+                <th scope="col">IsActive</th>
+                <th scope="col">Manage</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for loan in loans %}
+            <tr>
+                <th scope="row">{{ loan.id }}</th>
+                <td>{{ loan.Loan_Name }}</td>
+                <td>{{ loan.Loan_Duration }}</td>
+                <td>{{ loan.Amount }}</td>
+                <td>{{ loan.isActive }}</td>
+                <td>
+                    <button data-toggle="modal" data-target="#update{{ loan.id }}"
+                            class="btn btn-sm btn-info">Update
+                    </button>
+                    <button data-toggle="modal" data-target="#delete{{ loan.id }}"
+                            class="btn btn-sm btn-warning">Delete
+                    </button>
+                </td>
+            </tr>
+            <!-- update loan Modal -->
+            <div class="modal fade" id="update{{ loan.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="updateModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateModal">Update Group Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                           <form action="{% url 'update-loan' loan.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="Loan_Name">Loan_Name:</label>
+                                <input type="text" class="form-control" id="Loan_Name" name="Loan_Name"
+                                value="{{ loan.Loan_Name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="Loan_Duration">Loan_Duration:</label>
+                                <input type="number" class="form-control" id="Loan_Duration"
+                                       name="Loan_Duration" value="{{ loan.Loan_Duration }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="Amount">Amount:</label>
+                                <input type="number" class="form-control" id="Amount" name="Amount"
+                                value="{{ loan.Amount }}">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">save</button>
+                        </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- delete group Modal -->
+            <div class="modal fade" id="delete{{ loan.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="deleteModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModal">Deny Delete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'delete-loan' loan.id %}" method="post">
+                                {% csrf_token %}
+                                <p>Are you sure you want to delete " {{ loan.Loan_Name }}"</p>
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

@@ -128,9 +128,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MESSAGE_TAGS = {
-    message_constant.SUCCESS : 'success',
-    message_constant.DEBUG : 'debug',
-    message_constant.WARNING : 'warning',
-    message_constant.ERROR : 'danger',
-    message_constant.INFO : 'info',
+    message_constant.SUCCESS: 'success',
+    message_constant.DEBUG: 'debug',
+    message_constant.WARNING: 'warning',
+    message_constant.ERROR: 'danger',
+    message_constant.INFO: 'info',
 }
